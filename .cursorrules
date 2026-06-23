@@ -1,0 +1,406 @@
+# Cursor Rules - Pragmatic Senior Engineer Standards
+
+## Philosophy
+
+Good code is code that's easy to change. Not code that follows rules for their own sake.
+
+These guidelines exist to reduce bugs, speed up onboarding, and make refactoring safer. When a guideline conflicts with those goals, the guideline loses.
+
+---
+
+## The Only Hard Rules
+
+1. **No `any` in TypeScript** — Use `unknown` with type guards. This is non-negotiable.
+2. **Handle errors explicitly** — Never swallow exceptions silently.
+3. **No secrets in code** — Environment variables only.
+4. **Test critical paths** — Business logic and data transformations need coverage.
+
+Everything else is context-dependent.
+
+---
+
+## File & Function Size (Guidelines, Not Laws)
+
+**Ask "is this cohesive?" not "is this short?"**
+
+A 400-line file that handles one domain concept well is better than four 100-line files that fragment the logic and force constant file-hopping.
+
+**Signs you should split a file:**
+- You're scrolling constantly to understand the relationship between parts
+- Multiple unrelated concepts live together (user auth + payment processing)
+- The file has become a dumping ground for utilities
+- Different parts change for different reasons
+
+**Signs you should NOT split:**
+- Splitting would require passing lots of context between files
+- The "modules" would only be used in one place
+- You're splitting to hit a line count
+
+**Functions:** If you can't hold the function's logic in your head, it's too long. That might be 20 lines or 80 lines depending on complexity.
+
+---
+
+## TypeScript Standards
+
+### Types Should Earn Their Keep
+
+```typescript
+// ✅ Inline types for one-off shapes
+const processEvent = (event: { type: string; payload: unknown }) => { ... }
+
+// ✅ Extract when reused or complex
+interface UserProfile {
+  id: string;
+  email: string;
+  preferences: UserPreferences;
+}
+```
+
+Don't create a `types.ts` file for types only used in one place. Colocation > organization theater.
+
+### Prefer Interfaces for Objects
+
+```typescript
+// ✅ Interface for object shapes (extendable, better error messages)
+interface User {
+  id: string;
+  name: string;
+}
+
+// ✅ Type for unions, intersections, computed types
+type Status = 'active' | 'inactive' | 'pending';
+type UserWithStatus = User & { status: Status };
+```
+
+### Use Discriminated Unions for State
+
+```typescript
+// ✅ Impossible states are unrepresentable
+type AsyncState<T> =
+  | { status: 'idle' }
+  | { status: 'loading' }
+  | { status: 'success'; data: T }
+  | { status: 'error'; error: Error };
+```
+
+---
+
+## React Patterns
+
+### Component Complexity
+
+**When to split a component:**
+- Distinct UI sections that could be tested independently
+- Reusable pieces that appear elsewhere
+- Performance optimization (memo boundaries)
+
+**When NOT to split:**
+- To hit an arbitrary line count
+- When the "child" would need 8 props passed down
+- When the logic only makes sense in context
+
+### State Management Decision Tree
+
+```
+Is the state used by one component? → useState
+Is the state complex with many transitions? → useReducer
+Is it shared by a subtree? → Context (or prop drilling if shallow)
+Is it app-wide and frequently updated? → Zustand/Redux
+Is it server data? → React Query / SWR
+```
+
+### Hooks That Actually Help
+
+```typescript
+// ✅ Extract when logic is reusable or testable in isolation
+const useDebounce = <T>(value: T, ms: number): T => {
+  const [debounced, setDebounced] = useState(value);
+  
+  useEffect(() => {
+    const timeout = setTimeout(() => setDebounced(value), ms);
+    return () => clearTimeout(timeout);
+  }, [value, ms]);
+  
+  return debounced;
+};
+
+// ❌ Don't extract hooks just to "clean up" a component
+// A useButtonLogic() hook used by one button is indirection, not abstraction
+```
+
+---
+
+## Error Handling
+
+### The Pattern That Works
+
+```typescript
+// Define domain errors
+class NotFoundError extends Error {
+  constructor(resource: string, id: string) {
+    super(`${resource} not found: ${id}`);
+    this.name = 'NotFoundError';
+  }
+}
+
+// Handle at boundaries
+const getUser = async (id: string): Promise<User> => {
+  const user = await db.users.find(id);
+  if (!user) throw new NotFoundError('User', id);
+  return user;
+};
+
+// Catch and transform at API layer
+app.get('/users/:id', async (req, res) => {
+  try {
+    const user = await getUser(req.params.id);
+    res.json(user);
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      return res.status(404).json({ error: error.message });
+    }
+    logger.error('Unexpected error', { error, path: req.path });
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+```
+
+### Never Do This
+
+```typescript
+// ❌ Silent swallowing
+try {
+  riskyOperation();
+} catch (e) {
+  // TODO: handle this
+}
+
+// ❌ Logging without rethrowing or handling
+try {
+  riskyOperation();
+} catch (e) {
+  console.log(e);
+}
+```
+
+---
+
+## Naming
+
+**Good names eliminate comments.**
+
+```typescript
+// ❌ Needs explanation
+const d = 86400000;
+
+// ✅ Self-documenting  
+const MILLISECONDS_PER_DAY = 86400000;
+
+// ❌ Generic
+const data = await fetchData();
+const processedData = process(data);
+
+// ✅ Specific
+const users = await fetchActiveUsers();
+const usersWithPermissions = attachPermissions(users);
+```
+
+**Booleans read like questions:**
+- `isLoading`, `hasError`, `shouldRetry`, `canEdit`
+
+**Functions read like actions:**
+- `fetchUser`, `validateEmail`, `calculateTotal`, `formatCurrency`
+
+---
+
+## Code Organization
+
+### Feature-Based > Type-Based
+
+```
+# ✅ Feature-based (scales well)
+features/
+  auth/
+    LoginForm.tsx
+    useAuth.ts
+    auth.api.ts
+    auth.types.ts
+  payments/
+    PaymentForm.tsx
+    usePayment.ts
+    payment.api.ts
+
+# ❌ Type-based (becomes a maze)
+components/
+  LoginForm.tsx
+  PaymentForm.tsx
+hooks/
+  useAuth.ts
+  usePayment.ts
+api/
+  auth.ts
+  payment.ts
+```
+
+### Import Order (Consistency > Specific Order)
+
+Pick one and stick with it. Here's a reasonable default:
+
+```typescript
+// External
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+
+// Internal (absolute)
+import { Button } from '@/components/Button';
+import { useAuth } from '@/features/auth/useAuth';
+
+// Relative
+import { formatDate } from './utils';
+
+// Types (if separate)
+import type { User } from '@/types';
+```
+
+---
+
+## Performance
+
+### Don't Optimize Prematurely
+
+Profile first. Most performance problems come from:
+1. Unnecessary network requests
+2. Rendering too much data (virtualize lists > 100 items)
+3. Missing database indexes
+4. N+1 queries
+
+### React Performance (When It Actually Matters)
+
+```typescript
+// useMemo: expensive calculations
+const sortedItems = useMemo(
+  () => items.sort((a, b) => complexComparison(a, b)),
+  [items]
+);
+
+// useCallback: stable references for child components
+const handleClick = useCallback(() => {
+  onSelect(item.id);
+}, [item.id, onSelect]);
+
+// React.memo: components that receive same props often
+const ExpensiveList = memo(({ items }: Props) => {
+  return items.map(item => <ExpensiveItem key={item.id} item={item} />);
+});
+```
+
+---
+
+## Testing Philosophy
+
+### Test Behavior, Not Implementation
+
+```typescript
+// ✅ Tests what users care about
+test('shows error message when login fails', async () => {
+  server.use(mockLoginFailure());
+  
+  render(<LoginForm />);
+  await userEvent.type(screen.getByLabelText('Email'), 'test@test.com');
+  await userEvent.type(screen.getByLabelText('Password'), 'wrong');
+  await userEvent.click(screen.getByRole('button', { name: 'Sign in' }));
+  
+  expect(screen.getByRole('alert')).toHaveTextContent('Invalid credentials');
+});
+
+// ❌ Tests implementation details
+test('calls setError when login fails', () => {
+  const setError = jest.fn();
+  // ... testing internal state changes
+});
+```
+
+### What to Test
+
+- **Always:** Business logic, data transformations, critical user flows
+- **Usually:** Component integration, API contracts
+- **Sometimes:** Edge cases, error states
+- **Rarely:** Styling, trivial getters, third-party library wrappers
+
+---
+
+## Code Review Checklist
+
+Before submitting:
+
+- [ ] Does this solve the actual problem?
+- [ ] Would I understand this in 6 months?
+- [ ] Are errors handled appropriately?
+- [ ] Are there obvious performance issues?
+- [ ] Is there test coverage for the risky parts?
+- [ ] Did I remove the debugging code?
+
+---
+
+## Refactoring Triggers (Real Ones)
+
+**Refactor when:**
+- You're about to add a feature and the code structure fights you
+- You've fixed the same bug twice
+- Onboarding someone takes too long because of code complexity
+- You're copy-pasting with minor modifications
+
+**Don't refactor when:**
+- The code works and you're not touching that area
+- You're procrastinating on the actual task
+- You want to try a new pattern you read about
+
+---
+
+## Things That Actually Matter at Scale
+
+1. **Observability** — Structured logging, error tracking, metrics. You can't fix what you can't see.
+
+2. **Feature flags** — Ship incomplete features behind flags. Deploy != release.
+
+3. **Database migrations** — Reversible, tested, deployed separately from code.
+
+4. **API versioning** — Don't break existing clients. Deprecate gracefully.
+
+5. **Dependency updates** — Regular, small updates beat annual panic updates.
+
+6. **Documentation** — READMEs that explain why, not just what. Architecture decision records for big choices.
+
+---
+
+## Anti-Patterns to Avoid
+
+**Premature abstraction** — Don't build a "flexible" system until you have 3+ concrete use cases.
+
+**Configuration over code** — YAML/JSON configs that become their own programming language.
+
+**Abstraction addiction** — `UserServiceFactoryProvider` when you have one user service.
+
+**Comment-driven development** — Comments explaining what code does instead of writing clearer code.
+
+**Cargo culting** — Following patterns because "that's how it's done" without understanding why.
+
+---
+
+## The Real Golden Rules
+
+1. **Optimize for change** — Requirements will change. Code should be easy to modify.
+
+2. **Boring is good** — Use established patterns. Save creativity for the product.
+
+3. **Delete code freely** — Dead code is a liability. Version control has your back.
+
+4. **Names matter more than structure** — Good names in a messy structure > bad names in perfect structure.
+
+5. **Duplication is cheaper than wrong abstraction** — Copy-paste twice before abstracting.
+
+6. **Ship it** — Perfect code that ships late loses to good code that ships on time.
+
+---
+
+*These guidelines should make you faster, not slower. If following a guideline slows you down without clear benefit, question the guideline.*
