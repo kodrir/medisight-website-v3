@@ -35,7 +35,7 @@ export default function TrustPage() {
             <img
               src={TRUST_HERO_IMAGE}
               alt=""
-              className="h-full w-full scale-[1.30] translate-y-[12%] object-cover object-[center_20%]"
+              className="h-full w-full scale-[1.30] translate-y-[12%] object-cover object-[calc(50%-70px)_calc(20%+20px)] lg:object-[center_20%]"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-white from-0% via-white/90 via-45% to-transparent to-80% lg:via-white/85 lg:via-50% lg:to-transparent lg:to-70%" />
             <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/40 to-transparent lg:hidden" />
@@ -51,7 +51,7 @@ export default function TrustPage() {
                     actually works.
                   </span>
                 </h1>
-                <p className="mt-6 text-lg leading-relaxed text-slate-600 md:text-xl">
+                <p className="mt-6 max-w-[calc(50vw-1.5rem)] text-lg leading-relaxed text-slate-600 md:max-w-none md:text-xl">
                   HIPAA-aligned, Epic-integrated, and clinician-reviewed before anything reaches the chart.
                 </p>
                 <div className="mt-10 flex flex-wrap items-center justify-start gap-3">

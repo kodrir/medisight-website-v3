@@ -34,10 +34,10 @@ export function Hero() {
             </Reveal>
 
             <Reveal delay={0.03}>
-              <h1 className="text-5xl font-bold leading-[1.1] tracking-tight text-ink sm:text-5xl md:text-6xl">
+              <h1 className="text-4xl font-bold leading-[1.15] tracking-tight text-ink sm:text-5xl md:text-6xl">
                 Chart Less.{" "}
-                <span className="inline-block whitespace-nowrap bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">
-                  Know what matters.
+                <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent lg:inline-block lg:whitespace-nowrap">
+                  <span className="text-accent-700 sm:text-transparent">Know</span> what matters.
                 </span>
               </h1>
             </Reveal>

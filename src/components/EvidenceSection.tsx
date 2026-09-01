@@ -62,10 +62,10 @@ export function EvidenceSection() {
             </div>
           </Reveal>
 
-          <div className="mx-[-35px] mt-[calc(4rem+20px)] grid w-[calc(100%+70px)] gap-[calc(2rem+30px)] md:mt-[calc(5rem+20px)] lg:grid-cols-2 lg:items-stretch">
+          <div className="mt-[calc(4rem+20px)] grid w-full min-w-0 gap-8 md:mt-[calc(5rem+20px)] lg:grid-cols-2 lg:items-stretch">
             {/* IEEE card */}
-            <Reveal delay={0.04} className="h-full">
-              <article className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white shadow-card overflow-hidden">
+            <Reveal delay={0.04} className="h-full min-w-0">
+              <article className="flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card">
                 <div className="flex items-center gap-3 bg-gradient-to-r from-primary-50 to-slate-50 px-6 py-4 border-b border-slate-100">
                   <Award size={20} strokeWidth={1.75} className="shrink-0 text-primary-600" aria-hidden />
                   <span className="text-sm font-semibold text-primary-700 uppercase tracking-wide">
@@ -153,8 +153,8 @@ export function EvidenceSection() {
             </Reveal>
 
             {/* MedAgentBench card */}
-            <Reveal delay={0.08} className="h-full">
-              <article className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white shadow-card overflow-hidden">
+            <Reveal delay={0.08} className="h-full min-w-0">
+              <article className="flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card">
                 <div className="flex items-center gap-3 bg-gradient-to-r from-accent-50 to-slate-50 px-6 py-4 border-b border-slate-100">
                   <BarChart3 size={20} strokeWidth={1.75} className="shrink-0 text-accent-600" aria-hidden />
                   <span className="text-sm font-semibold text-accent-700 uppercase tracking-wide">

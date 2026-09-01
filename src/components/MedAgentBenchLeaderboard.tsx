@@ -12,8 +12,8 @@ const ORG_BADGE: Record<OrgTone, string> = {
 
 export function MedAgentBenchLeaderboard() {
   return (
-    <div className="flex flex-1 flex-col overflow-x-auto rounded-xl border border-slate-200">
-      <table className="h-full w-full min-w-[480px] border-collapse text-sm">
+    <div className="flex min-w-0 flex-1 flex-col overflow-x-auto rounded-xl border border-slate-200">
+      <table className="h-full w-full min-w-[28rem] border-collapse text-sm">
         <thead>
           <tr className="border-b border-slate-200 bg-slate-50">
             <th className="px-3 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-400">
