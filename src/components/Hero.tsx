@@ -14,16 +14,15 @@ export function Hero() {
   return (
     <section id="top" className="relative isolate overflow-hidden">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div
-          className="absolute inset-y-0 left-0 w-[150px] bg-[#343d42]"
-          aria-hidden
-        />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/images/heroes/home-clinical-team.jpg"
-          alt=""
-          className="absolute inset-0 h-full w-full translate-x-[150px] object-cover object-[center_calc(50%+90px)]"
-        />
+        <div className="flex h-full w-full">
+          <div className="h-full w-[150px] shrink-0 bg-[#343d42]" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/heroes/home-clinical-team.jpg"
+            alt=""
+            className="h-full min-w-0 flex-1 object-cover object-[center_65%]"
+          />
+        </div>
         <div className="absolute inset-0 bg-gradient-to-r from-white from-0% via-white/90 via-45% to-transparent to-80% lg:via-white/85 lg:via-50% lg:to-transparent lg:to-70%" />
         <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/40 to-transparent lg:hidden" />
       </div>
