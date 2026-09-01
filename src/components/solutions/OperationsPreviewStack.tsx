@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import {
   Cable,
@@ -23,12 +23,22 @@ interface AgentWindowProps {
   children: ReactNode;
   footer?: ReactNode;
   className?: string;
+  style?: CSSProperties;
 }
 
-function AgentWindow({ agent, dotClass, label, children, footer, className = "" }: AgentWindowProps) {
+function AgentWindow({
+  agent,
+  dotClass,
+  label,
+  children,
+  footer,
+  className = "",
+  style,
+}: AgentWindowProps) {
   return (
     <div
       className={`overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-raised ${className}`}
+      style={style}
     >
       <div className="flex items-center justify-between gap-3 border-b border-slate-200 bg-slate-50 px-4 py-2.5">
         <div className="flex min-w-0 items-center gap-2">
@@ -100,13 +110,20 @@ const inboxRows = [
     dataset switches never resize My Assistant. */
 const BACK_PANEL_BODY_H = 236;
 
-function AssistantWindow({ className = "" }: { className?: string }) {
+function AssistantWindow({
+  className = "",
+  style,
+}: {
+  className?: string;
+  style?: CSSProperties;
+}) {
   return (
     <AgentWindow
       agent="My Assistant"
       dotClass="bg-agent-assistant"
       label="Today's schedule"
       className={className}
+      style={style}
     >
       <div className="space-y-1.5 overflow-hidden p-4" style={{ height: BACK_PANEL_BODY_H }}>
         {scheduleRows.map((row, i) => (
@@ -218,10 +235,12 @@ function LabsWindow({
   data,
   animKey,
   className = "",
+  style,
 }: {
   data: LabsChartData;
   animKey: string;
   className?: string;
+  style?: CSSProperties;
 }) {
   const reduceMotion = useReducedMotion();
   const n = data.values.length;
@@ -246,6 +265,7 @@ function LabsWindow({
       dotClass="bg-agent-labs"
       label={data.label}
       className={className}
+      style={style}
     >
       {/* Fixed-height content area — never changes size regardless of dataset or animation phase */}
       <div className="overflow-hidden p-4" style={{ height: BACK_PANEL_BODY_H }}>
@@ -475,9 +495,11 @@ const JUMP_PRESS_DELAY_MS = 1200;
 
 function RecordsWindow({
   className = "",
+  style,
   onJumpToSource,
 }: {
   className?: string;
+  style?: CSSProperties;
   onJumpToSource?: () => void;
 }) {
   const reduceMotion = useReducedMotion();
@@ -583,7 +605,7 @@ function RecordsWindow({
   };
 
   return (
-    <div ref={ref} className={className}>
+    <div ref={ref} className={className} style={style}>
       <AgentWindow
         agent="My Records"
         dotClass="bg-agent-colleague"
@@ -741,23 +763,36 @@ function RecordsWindow({
 /* Stack                                                               */
 /* ------------------------------------------------------------------ */
 
+const STACK_CARD_W = 500;
+
 export function OperationsPreviewStack() {
   const [labsDataset, setLabsDataset] = useState<"creatinine" | "hba1c">("creatinine");
 
   return (
-    <div className="mx-auto mb-[-96px] w-full max-w-5xl origin-center translate-y-[24px] scale-[1] px-2 md:px-4">
-      <div className="relative h-[560px]">
-        <div className="absolute inset-x-0 top-0 z-0 flex items-start justify-center gap-[200px]">
-          <AssistantWindow className="w-[52%] shrink-0 origin-top-left scale-[0.85] -translate-y-[10px] opacity-80" />
-          <LabsWindow
-            data={labsDataset === "creatinine" ? creatinineLabData : hba1cLabData}
-            animKey={labsDataset}
-            className="w-[52%] shrink-0 origin-top-right scale-[0.95625] translate-y-[10px] opacity-80"
-          />
-        </div>
+    <div className="ops-preview-stack mx-auto mb-[-96px] w-full max-w-5xl translate-y-[24px] overflow-visible px-2 md:px-4">
+      <div className="relative mx-auto overflow-visible" style={{ width: STACK_CARD_W, height: 560 }}>
+        <AssistantWindow
+          className="absolute left-1/2 top-0 z-0 origin-top opacity-80"
+          style={{
+            width: STACK_CARD_W,
+            transform:
+              "translateX(calc(-50% - var(--card-w) / 2 - var(--back-gap) / 2 + var(--back-inset))) scale(0.85) translateY(-10px)",
+          }}
+        />
+        <LabsWindow
+          data={labsDataset === "creatinine" ? creatinineLabData : hba1cLabData}
+          animKey={labsDataset}
+          className="absolute left-1/2 top-0 z-0 origin-top opacity-80"
+          style={{
+            width: STACK_CARD_W,
+            transform:
+              "translateX(calc(-50% + var(--card-w) / 2 + var(--back-gap) / 2 - var(--back-inset))) scale(0.95625) translateY(10px)",
+          }}
+        />
 
         <RecordsWindow
-          className="absolute left-1/2 top-[160px] z-10 w-[52%] -translate-x-1/2"
+          className="absolute left-1/2 top-[160px] z-10 -translate-x-1/2"
+          style={{ width: STACK_CARD_W }}
           onJumpToSource={() => setLabsDataset("hba1c")}
         />
       </div>

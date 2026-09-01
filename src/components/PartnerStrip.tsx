@@ -1,12 +1,12 @@
 interface Partner {
   src: string;
   alt: string;
-  variant: "default" | "mono" | "medicise" | "onyx";
+  variant: "default" | "mono" | "medicise" | "onyx" | "caleo";
   label?: string;
 }
 
 const partners: Partner[] = [
-  { src: "/trust-logos/caleo-biotechnologies.png", alt: "Caleo Biotechnologies", variant: "default" },
+  { src: "/trust-logos/caleo-biotechnologies.png", alt: "Caleo Biotechnologies", variant: "caleo" },
   {
     src: "/trust-logos/janelia-research-campus.png",
     alt: "Janelia Research Campus",
@@ -32,6 +32,7 @@ const logoClass: Record<Partner["variant"], string> = {
   mono: "trust-logo trust-logo--mono",
   medicise: "trust-logo trust-logo--medicise",
   onyx: "trust-logo trust-logo--onyx",
+  caleo: "trust-logo trust-logo--caleo",
 };
 
 function LogoItem({

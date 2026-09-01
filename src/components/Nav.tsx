@@ -32,7 +32,7 @@ export function Nav() {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/85 backdrop-blur-md">
       <nav
-        className="container-content grid h-16 grid-cols-[1fr_auto_1fr] items-center"
+        className="container-content relative grid h-16 grid-cols-[1fr_auto_1fr] items-center"
         aria-label="Primary"
       >
         <a
@@ -44,7 +44,7 @@ export function Nav() {
           <span className="text-lg font-semibold tracking-tight text-slate-900">Medisight</span>
         </a>
 
-        <ul className="hidden items-center gap-8 justify-self-center md:flex">
+        <ul className="hidden items-center gap-8 justify-self-center lg:flex">
           <li
             className="relative"
             onMouseEnter={() => setSolutionsOpen(true)}
@@ -52,7 +52,7 @@ export function Nav() {
           >
             <button
               type="button"
-              className="flex items-center gap-1 text-sm font-medium text-slate-600 transition-colors hover:text-primary-700"
+              className="flex shrink-0 items-center gap-1 whitespace-nowrap text-sm font-medium text-slate-600 transition-colors hover:text-primary-700"
               aria-expanded={solutionsOpen}
               aria-haspopup="true"
               onClick={() => setSolutionsOpen((v) => !v)}
@@ -96,7 +96,7 @@ export function Nav() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="text-sm font-medium text-slate-600 transition-colors hover:text-primary-700"
+                className="whitespace-nowrap text-sm font-medium text-slate-600 transition-colors hover:text-primary-700"
               >
                 {link.label}
               </a>
@@ -104,10 +104,10 @@ export function Nav() {
           ))}
         </ul>
 
-        <div className="col-start-3 hidden items-center gap-3 justify-self-end md:flex">
+        <div className="col-start-3 hidden items-center gap-3 justify-self-end lg:flex">
           <a
             href={SIGN_IN_URL}
-            className="rounded-lg px-3.5 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
+            className="shrink-0 whitespace-nowrap rounded-lg px-3.5 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
           >
             Sign in
           </a>
@@ -115,7 +115,7 @@ export function Nav() {
             href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-lg bg-gradient-to-r from-primary-600 to-accent-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all hover:from-primary-700 hover:to-accent-700"
+            className="shrink-0 whitespace-nowrap rounded-lg bg-gradient-to-r from-primary-600 to-accent-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all hover:from-primary-700 hover:to-accent-700"
           >
             Request a Demo
           </a>
@@ -123,85 +123,93 @@ export function Nav() {
 
         <button
           type="button"
-          className="col-start-3 inline-flex h-10 w-10 items-center justify-center justify-self-end rounded-lg text-slate-700 hover:bg-slate-100 md:hidden"
+          className="relative z-10 col-start-3 inline-flex h-10 w-10 items-center justify-center justify-self-end rounded-lg text-slate-700 hover:bg-slate-100 lg:hidden"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
         >
           {open ? <X size={22} strokeWidth={1.75} /> : <Menu size={22} strokeWidth={1.75} />}
         </button>
+
+        {open && (
+          <>
+            <button
+              type="button"
+              className="fixed inset-0 top-16 z-40 bg-slate-900/20 lg:hidden"
+              aria-label="Close menu"
+              onClick={() => setOpen(false)}
+            />
+            <div className="absolute right-0 top-full z-50 mt-2 w-72 max-w-[calc(100vw-3rem)] overflow-hidden rounded-xl border border-slate-200 bg-white shadow-raised lg:hidden">
+              <ul className="flex flex-col p-2">
+                <li>
+                  <button
+                    type="button"
+                    className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-slate-50"
+                    aria-expanded={mobileSolutionsOpen}
+                    onClick={() => setMobileSolutionsOpen((v) => !v)}
+                  >
+                    Solutions
+                    <ChevronDown
+                      size={16}
+                      strokeWidth={2}
+                      className={`transition-transform duration-200 ${
+                        mobileSolutionsOpen ? "rotate-180" : ""
+                      }`}
+                      aria-hidden
+                    />
+                  </button>
+                  {mobileSolutionsOpen && (
+                    <ul className="mb-1 ml-2 border-l border-slate-200 pl-2">
+                      {solutionsLinks.map((link) => (
+                        <li key={link.href}>
+                          <a
+                            href={link.href}
+                            className="block rounded-lg px-2 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50"
+                            onClick={() => setOpen(false)}
+                          >
+                            {link.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+
+                {primaryLinks.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      className="block rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                      onClick={() => setOpen(false)}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+
+                <li className="mt-1 flex flex-col gap-2 border-t border-slate-100 px-1 pb-1 pt-2">
+                  <a
+                    href={SIGN_IN_URL}
+                    className="whitespace-nowrap rounded-lg border border-slate-200 px-3 py-2 text-center text-sm font-medium text-slate-700 hover:bg-slate-50"
+                    onClick={() => setOpen(false)}
+                  >
+                    Sign in
+                  </a>
+                  <a
+                    href={DEMO_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="whitespace-nowrap rounded-lg bg-gradient-to-r from-primary-600 to-accent-600 px-3 py-2 text-center text-sm font-semibold text-white"
+                    onClick={() => setOpen(false)}
+                  >
+                    Request a Demo
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </>
+        )}
       </nav>
-
-      {open && (
-        <div className="border-t border-slate-200 bg-white md:hidden">
-          <ul className="container-content flex flex-col py-3">
-            <li>
-              <button
-                type="button"
-                className="flex w-full items-center justify-between rounded-lg px-2 py-3 text-base font-medium text-slate-700 hover:bg-slate-50"
-                aria-expanded={mobileSolutionsOpen}
-                onClick={() => setMobileSolutionsOpen((v) => !v)}
-              >
-                Solutions
-                <ChevronDown
-                  size={18}
-                  strokeWidth={2}
-                  className={`transition-transform duration-200 ${
-                    mobileSolutionsOpen ? "rotate-180" : ""
-                  }`}
-                  aria-hidden
-                />
-              </button>
-              {mobileSolutionsOpen && (
-                <ul className="mb-1 ml-2 border-l border-slate-200 pl-3">
-                  {solutionsLinks.map((link) => (
-                    <li key={link.href}>
-                      <a
-                        href={link.href}
-                        className="block rounded-lg px-2 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50"
-                        onClick={() => setOpen(false)}
-                      >
-                        {link.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-
-            {primaryLinks.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  className="block rounded-lg px-2 py-3 text-base font-medium text-slate-700 hover:bg-slate-50"
-                  onClick={() => setOpen(false)}
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-
-            <li className="mt-2 flex flex-col gap-2 px-2 pb-2">
-              <a
-                href={SIGN_IN_URL}
-                className="rounded-lg border border-slate-200 px-4 py-2.5 text-center text-sm font-medium text-slate-700"
-                onClick={() => setOpen(false)}
-              >
-                Sign in
-              </a>
-              <a
-                href={DEMO_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-lg bg-gradient-to-r from-primary-600 to-accent-600 px-4 py-2.5 text-center text-sm font-semibold text-white"
-                onClick={() => setOpen(false)}
-              >
-                Request a Demo
-              </a>
-            </li>
-          </ul>
-        </div>
-      )}
     </header>
   );
 }

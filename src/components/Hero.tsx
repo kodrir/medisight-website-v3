@@ -19,14 +19,10 @@ export function Hero() {
           <img
             src="/images/heroes/home-clinical-team.jpg"
             alt=""
-            className="absolute inset-0 h-full w-full object-cover object-[calc(50%+50px)_52%] xl:object-[calc(50%+50px)_42%] 2xl:object-[calc(50%+50px)_36%]"
-          />
-          <div
-            className="absolute inset-y-0 left-0 w-[250px] bg-[#343d42]"
-            aria-hidden
+            className="hero-photo"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-white from-0% via-white/90 via-45% to-transparent to-80% lg:via-white/85 lg:via-50% lg:to-transparent lg:to-70%" />
+        <div className="hero-fade" />
         <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/40 to-transparent lg:hidden" />
       </div>
 

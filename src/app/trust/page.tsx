@@ -43,7 +43,7 @@ export default function TrustPage() {
 
           <div className="container-content relative flex min-h-[44rem] items-center py-24 md:min-h-[48rem] md:py-32 lg:min-h-[52rem] lg:py-40">
             <Reveal>
-              <div className="mx-auto w-full max-w-lg text-center md:max-w-xl lg:mx-0 lg:max-w-2xl lg:-translate-x-20 lg:pl-12 lg:text-left xl:-translate-x-24 xl:pl-20 2xl:-translate-x-28 2xl:pl-28">
+              <div className="w-full max-w-lg text-left md:max-w-xl lg:max-w-2xl lg:-translate-x-20 lg:pl-12 xl:-translate-x-24 xl:pl-20 2xl:-translate-x-28 2xl:pl-28">
                 <span className="eyebrow">Trust &amp; security</span>
                 <h1 className="mt-3 text-4xl font-bold leading-[1.1] tracking-tight text-ink md:text-5xl lg:text-6xl">
                   Built for how healthcare{" "}
@@ -54,7 +54,7 @@ export default function TrustPage() {
                 <p className="mt-6 text-lg leading-relaxed text-slate-600 md:text-xl">
                   HIPAA-aligned, Epic-integrated, and clinician-reviewed before anything reaches the chart.
                 </p>
-                <div className="mt-10 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+                <div className="mt-10 flex flex-wrap items-center justify-start gap-3">
                   <a
                     href={DEMO_URL}
                     target="_blank"

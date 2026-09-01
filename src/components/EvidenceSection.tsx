@@ -112,14 +112,14 @@ export function EvidenceSection() {
                       href="/images/evidence/best-presenter-certificate.jpg"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group relative block h-28 w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-50"
+                      className="group relative block aspect-[1024/520] w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-50"
                       aria-label="View Best Presenter certificate (opens full size)"
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src="/images/evidence/best-presenter-certificate.jpg"
                         alt="Certificate of Best Presenter awarded to Shruti Bhandari for the paper 'The Advanced Health Risk Predictor' at IEEE AIIoT 2026, Session 5"
-                        className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.03]"
+                        className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
                         loading="lazy"
                       />
                       <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-slate-900/0 transition-colors duration-200 group-hover:bg-slate-900/15 rounded-xl">
