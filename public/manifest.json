@@ -1,7 +1,7 @@
 {
-  "name": "Medisight | Agentic Clinical Platform",
+  "name": "Medisight | Clinical Intelligence on Your Epic Data",
   "short_name": "Medisight",
-  "description": "Advanced agentic automation for healthcare teams on one shared clinical platform.",
+  "description": "A clinical intelligence layer on your existing Epic data, for care teams.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

@@ -13,11 +13,10 @@ export function Cta() {
               className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/10 blur-2xl"
             />
             <h2 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-white md:text-4xl">
-              See agentic automation in action
+              See it in action
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-primary-100">
-              From autonomous morning prep to post-visit records, labs, and consult support on your
-              workflows.
+              Tell us about your workflow. We&apos;ll show you where Medisight fits.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <a
@@ -30,10 +29,10 @@ export function Cta() {
                 <ArrowRight size={18} strokeWidth={1.75} />
               </a>
               <a
-                href="#agents"
+                href="/contact"
                 className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/40 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-white/10"
               >
-                Explore the platform
+                Contact us
               </a>
             </div>
           </div>

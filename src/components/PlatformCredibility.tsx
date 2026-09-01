@@ -1,20 +1,18 @@
 import { Reveal } from "./Reveal";
-import {
-  credibilityPillars,
-} from "@/lib/platformCredibility";
+import { credibilityPillars } from "@/lib/platformCredibility";
 
 export function PlatformCredibility() {
   return (
-    <section className="scroll-mt-20 bg-white py-20 md:py-28">
+    <section id="credibility" className="scroll-mt-20 bg-white py-20 md:py-28">
       <div className="container-content">
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">
-            <span className="eyebrow">Why Medisight</span>
+            <span className="eyebrow">How it&apos;s built</span>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-ink md:text-4xl">
-              What makes the platform credible
+              Clinical-grade by design
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
-              Agentic automation built on traceable, literature-grounded infrastructure.
+            <p className="mx-auto mt-4 max-w-xl text-lg text-slate-600">
+              Traceable, literature-grounded, built for healthcare.
             </p>
           </div>
         </Reveal>
@@ -25,7 +23,7 @@ export function PlatformCredibility() {
               <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card transition-shadow hover:shadow-raised">
                 <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
                   <video
-                    className="h-full w-full object-cover"
+                    className={`h-full w-full object-cover ${pillar.videoClassName ?? ""}`}
                     autoPlay
                     muted
                     loop

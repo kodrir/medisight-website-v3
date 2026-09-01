@@ -18,7 +18,7 @@ npm run build
 npm run start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) and spot-check `/`, `/results`, `/terms`, and `/privacy`.
+Open [http://localhost:3000](http://localhost:3000) and spot-check `/`, `/evidence`, `/terms`, and `/privacy`. Verify `/results` redirects to `/evidence` in the Netlify redirect rules.
 
 ## Option A: Git deploy (recommended)
 
@@ -30,8 +30,10 @@ Open [http://localhost:3000](http://localhost:3000) and spot-check `/`, `/result
    | --- | --- |
    | Base directory | *(leave empty — repo root)* |
    | Build command | `npm run build` |
-   | Publish directory | `.next` |
-   | Plugin | `@netlify/plugin-nextjs` |
+   | Publish directory | `out` |
+
+   The site builds as a static export (`output: "export"` in `next.config.mjs`), so no
+   `@netlify/plugin-nextjs` plugin is needed.
 
 4. Optional: set **Environment variable** `NODE_VERSION` = `20` (Netlify also reads `.nvmrc`).
 5. Deploy. Production URL appears when the build succeeds.
@@ -46,17 +48,27 @@ Open [http://localhost:3000](http://localhost:3000) and spot-check `/`, `/result
 
 Netlify builds preview URLs for pull requests by default. No extra config required.
 
-## Option B: Netlify CLI
+## Option B: Manual drag-and-drop (small sites only)
+
+Netlify recommends drag-and-drop only when the **uncompressed site is under 50 MB** and **no single file exceeds 10 MB**. This site is ~70 MB with three video files over 10 MB, so manual upload often fails silently (404 on every route). **Use Option C instead.**
+
+If you still use drag-and-drop: upload the **contents** of the `out/` folder (or a zip of those contents with `index.html` at the root), not the source repo zip.
+
+## Option C: Netlify CLI (recommended for this site)
+
+Handles large assets reliably. From the repo root:
 
 ```bash
 npm install -g netlify-cli
-cd /path/to/medisight-website_v2
 netlify login
-netlify init
-netlify deploy --build --prod
+netlify link          # once — select the Medisight site
+npm run build
+netlify deploy --prod --dir=out
 ```
 
-Use `netlify deploy --build` (without `--prod`) for a draft URL first.
+Use `netlify deploy --dir=out` (without `--prod`) for a draft URL first.
+
+**Current production URL (Medisight AI team):** https://wondrous-salmiakki-c1830b.netlify.app
 
 ## Migrating from the old static site
 
@@ -70,6 +82,7 @@ Legacy URL redirects are configured in `netlify.toml`:
 - `/index.html` → `/`
 - `/terms.html` → `/terms`
 - `/privacy.html` → `/privacy`
+- `/results` → `/evidence`
 
 ## Environment variables
 
@@ -80,7 +93,8 @@ The marketing site does not require secrets to build or run. Add variables later
 | Issue | What to try |
 | --- | --- |
 | Build fails on Node version | Set `NODE_VERSION=20` in Netlify env vars; confirm `.nvmrc` exists at repo root. |
-| Wrong site or 404 on routes | Ensure `@netlify/plugin-nextjs` is enabled (declared in `netlify.toml`). |
+| Every route 404 after drag-and-drop | Site is too large for manual upload (~70 MB, videos >10 MB each). Use **Option C** (Netlify CLI). |
+| Wrong site or 404 on `/solutions/*` | Confirm `trailingSlash: true` in `next.config.mjs` and publish directory is `out`. |
 | Stale assets after deploy | Hard refresh; check cache headers for `/_next/static/*`. |
 | Old HTML still showing | Confirm DNS points to the new Netlify site and the old `dist` deploy is retired. |
 

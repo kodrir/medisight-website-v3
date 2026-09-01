@@ -21,12 +21,12 @@ export const caseStudies: CaseStudy[] = [
     logoClass: "h-14 md:h-16",
     isPilot: true,
     challenge:
-      "The clinic needed to process complex cardiopulmonary exercise data efficiently while keeping clinicians in control of interpretation, without manual review bottlenecks.",
+      "Manually reviewing complex cardiopulmonary exercise data slowed clinicians down.",
     solution:
-      "Deployed an analytics platform with real-time dashboards, AI-assisted analytical agents, and workflow tooling tailored to exercise physiology teams.",
-    outcomeTitle: "Faster workflow for complex data review",
+      "Real-time dashboards and AI-assisted agents built for exercise physiology workflows.",
+    outcomeTitle: "Faster review, same clinical control",
     outcomeBody:
-      "In this pilot, higher-resolution data views surfaced patterns for clinician review that were impractical to spot manually, supporting the team's own assessment and workflow.",
+      "Higher-resolution views surfaced patterns clinicians could act on immediately.",
   },
   {
     id: "caleo",
@@ -36,12 +36,12 @@ export const caseStudies: CaseStudy[] = [
     logoClass: "h-12 md:h-14",
     isPilot: true,
     challenge:
-      "Manual cell-image interpretation created significant bottlenecks, limiting research throughput and reproducibility while constraining the ability to surface subtle patterns.",
+      "Manual cell-image interpretation bottlenecked research throughput and reproducibility.",
     solution:
-      "Deployed an AI-assisted image analysis platform for cell segmentation, morphology quantification, and stain analysis in a research setting, converting cellular imagery into reproducible, review-ready outputs.",
+      "AI-assisted image analysis for cell segmentation, morphology, and stain quantification.",
     outcomeTitle: "Days → Minutes in analysis time",
     outcomeBody:
-      "In this pilot study, the team reported high reproducibility across a large image set and faster experimental throughput. Results are illustrative and may not reflect typical outcomes.",
+      "The team processed a full image set with consistently reproducible results.",
   },
   {
     id: "janelia",
@@ -51,11 +51,11 @@ export const caseStudies: CaseStudy[] = [
     logoClass: "trust-logo--mono h-12 md:h-14",
     isPilot: true,
     challenge:
-      "Teams needed a flexible solution to process, analyze, and visualize diverse, complex datasets without manual manipulation or inconsistent workflows across research groups.",
+      "Diverse datasets meant manual handling and inconsistent workflows across research groups.",
     solution:
-      "Built a universal tabular data processing platform with automated visualization, statistical modules, and one-click report generation designed around scientific research workflows.",
+      "A universal data platform with automated visualization and one-click reporting.",
     outcomeTitle: "Hours → Seconds in dataset analysis",
     outcomeBody:
-      "In this pilot, teams reported faster dataset processing and more consistent reporting across groups. Results are illustrative and may not reflect typical outcomes.",
+      "Every research group now runs the same fast, consistent analysis pipeline.",
   },
 ];

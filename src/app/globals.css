@@ -118,6 +118,25 @@
     filter: brightness(0) saturate(100%) contrast(2);
   }
 
+  .trust-logo--onyx {
+    height: 56px;
+    max-height: 56px;
+    max-width: 56px;
+    border-radius: 10px;
+  }
+
+  .trust-logos__label {
+    white-space: nowrap;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .trust-logos__label--onyx {
+    margin-left: 0.35rem;
+    font-size: 0.75rem;
+    color: #8953c7;
+  }
+
   @media (max-width: 768px) {
     .trust-logos {
       padding: 2.5rem 0;
@@ -132,6 +151,17 @@
       height: 60px;
       max-height: 60px;
     }
+
+    .trust-logo--onyx {
+      height: 44px;
+      max-height: 44px;
+      max-width: 44px;
+    }
+
+    .trust-logos__label--onyx {
+      font-size: 0.7rem;
+      margin-left: 0.3rem;
+    }
   }
 
   @media (max-width: 480px) {
@@ -142,6 +172,16 @@
     .trust-logo {
       height: 48px;
       max-height: 48px;
+    }
+
+    .trust-logo--onyx {
+      height: 36px;
+      max-height: 36px;
+      max-width: 36px;
+    }
+
+    .trust-logos__label--onyx {
+      font-size: 0.65rem;
     }
   }
 }

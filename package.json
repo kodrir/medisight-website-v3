@@ -2,12 +2,16 @@
   "name": "medisight-website",
   "version": "1.0.0",
   "private": true,
-  "description": "Medisight marketing site: agentic clinical platform.",
+  "engines": {
+    "node": "20"
+  },
+  "description": "Medisight marketing site: a clinical intelligence layer on your existing Epic data.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy:netlify": "npm run build && netlify deploy --prod --dir=out"
   },
   "dependencies": {
     "framer-motion": "^11.11.17",

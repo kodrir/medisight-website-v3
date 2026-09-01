@@ -10,12 +10,12 @@ export function CaseStudies() {
       <Reveal>
         <div className="mx-auto max-w-2xl text-center">
           <span className="eyebrow">Pilot partners</span>
-          <h1 className="mt-3 text-3xl font-bold tracking-tight text-ink md:text-4xl">
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-ink md:text-4xl">
             Results in the{" "}
             <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">
               field
             </span>
-          </h1>
+          </h2>
           <p className="mt-4 text-lg leading-relaxed text-slate-600">
             Pilot deployments across healthcare and research settings. Outcomes describe specific
             engagements and may not reflect typical results.

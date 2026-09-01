@@ -21,33 +21,32 @@ const SITE_URL = "https://medisight.ai";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Medisight | Agentic Clinical Platform",
+    default: "Medisight | Clinical Intelligence on Your EHR Data",
     template: "%s · Medisight",
   },
   description:
-    "Advanced agentic automation for healthcare: My Assistant, My Patients, My Records, My Labs, and My Colleague on one platform. HIPAA-aligned with Epic HL7/FHIR integration and ClearView traceability.",
+    "Medisight is a clinical intelligence layer on your existing EHR data. Cited diagnostic insights and workflow automation on one platform, with the clinician always in control.",
   keywords: [
-    "agentic automation",
-    "agentic healthcare AI",
+    "clinical intelligence layer",
+    "Epic FHIR integration",
     "clinical decision support",
     "ambient documentation",
     "personalized lab baselines",
-    "Epic FHIR integration",
-    "healthcare AI agents",
+    "healthcare AI",
   ],
   openGraph: {
     type: "website",
     url: SITE_URL,
     siteName: "Medisight",
-    title: "Medisight | Agentic Clinical Platform",
+    title: "Medisight | Clinical Intelligence on Your EHR Data",
     description:
-      "Orchestrated agentic automation for admin, records, labs, and clinical decision support on one shared platform.",
+      "Cited diagnostic insights and workflow automation, built on the EHR data your team already has.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Medisight | Agentic Clinical Platform",
+    title: "Medisight | Clinical Intelligence on Your EHR Data",
     description:
-      "Advanced agentic automation for healthcare. Shared data layer, ClearView traceability, Epic HL7/FHIR integration.",
+      "Cited diagnostic insights and workflow automation, built on the EHR data your team already has.",
   },
   robots: { index: true, follow: true },
   icons: {

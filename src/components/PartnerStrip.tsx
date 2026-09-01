@@ -1,5 +1,11 @@
-const partners = [
-  { src: "/trust-logos/google.png", alt: "Google", variant: "default" },
+interface Partner {
+  src: string;
+  alt: string;
+  variant: "default" | "mono" | "medicise" | "onyx";
+  label?: string;
+}
+
+const partners: Partner[] = [
   { src: "/trust-logos/caleo-biotechnologies.png", alt: "Caleo Biotechnologies", variant: "default" },
   {
     src: "/trust-logos/janelia-research-campus.png",
@@ -13,19 +19,26 @@ const partners = [
     alt: "Technology Digest",
     variant: "mono",
   },
-] as const;
+  {
+    src: "/trust-logos/onyx-biopartners.png",
+    alt: "Onyx Biopartners",
+    variant: "onyx",
+    label: "Onyx Biopartners",
+  },
+];
 
-const logoClass: Record<(typeof partners)[number]["variant"], string> = {
+const logoClass: Record<Partner["variant"], string> = {
   default: "trust-logo",
   mono: "trust-logo trust-logo--mono",
   medicise: "trust-logo trust-logo--medicise",
+  onyx: "trust-logo trust-logo--onyx",
 };
 
 function LogoItem({
   partner,
   decorative = false,
 }: {
-  partner: (typeof partners)[number];
+  partner: Partner;
   decorative?: boolean;
 }) {
   return (
@@ -40,6 +53,11 @@ function LogoItem({
         width={120}
         height={80}
       />
+      {partner.label ? (
+        <span className="trust-logos__label trust-logos__label--onyx" aria-hidden={decorative}>
+          {partner.label}
+        </span>
+      ) : null}
     </div>
   );
 }

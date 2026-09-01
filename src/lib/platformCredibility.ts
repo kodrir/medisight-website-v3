@@ -4,28 +4,30 @@ export interface CredibilityPillar {
   video: string;
   engineName: string;
   engineSubtitle: string;
+  /** Optional object-fit positioning for videos that need custom framing. */
+  videoClassName?: string;
 }
 
 export const credibilityPillars: CredibilityPillar[] = [
   {
-    title: "Literature-grounded intelligence",
+    title: "Grounded in real literature and records",
     engineName: "TORAG",
     engineSubtitle: "Tuned / Optimized RAG",
     video: "/videos/patent-pending-technology.mp4",
-    body: "TORAG is a custom enterprise retrieval system purpose-built for healthcare, integrating scientific literature and EHR context with built-in compliance features so outputs stay grounded in verifiable sources.",
+    body: "Every insight is checked against the patient's own chart and published clinical literature — not guessed from patterns alone.",
   },
   {
-    title: "Fully traceable",
+    title: "You can see exactly why",
     engineName: "ClearView",
-    engineSubtitle: "White-box validation",
+    engineSubtitle: "Source-linked review",
     video: "/videos/traceable.mp4",
-    body: "ClearView makes every output traceable and verifiable, linking summaries and references back to the data points and published sources behind them for clinician review before they reach the chart.",
+    body: "Every output links back to the note, lab, or paper it came from, so your team can verify it before it reaches the chart.",
   },
   {
-    title: "EHR and lab integration",
+    title: "Works with the systems you have",
     engineName: "AutoFocus",
-    engineSubtitle: "Multi-agent orchestration",
+    engineSubtitle: "Automated data routing",
     video: "/videos/easy-integration.mp4",
-    body: "AutoFocus powers agentic orchestration across the platform, compensating for gaps in patient data in real time and routing lab and EHR inputs to the right automated workflow via HL7/FHIR integration.",
+    body: "Lab and EHR data routed to the right workflow via HL7/FHIR — nothing to rip out or replace.",
   },
 ];
