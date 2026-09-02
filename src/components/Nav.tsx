@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { BrandMark } from "./BrandMark";
-import { DEMO_URL, SIGN_IN_URL } from "@/lib/links";
+import { DEMO_URL } from "@/lib/links";
 
 const solutionsLinks = [
   {
@@ -106,12 +106,6 @@ export function Nav() {
 
         <div className="col-start-3 hidden items-center gap-3 justify-self-end lg:flex">
           <a
-            href={SIGN_IN_URL}
-            className="shrink-0 whitespace-nowrap rounded-lg px-3.5 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
-          >
-            Sign in
-          </a>
-          <a
             href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
@@ -188,13 +182,6 @@ export function Nav() {
                 ))}
 
                 <li className="mt-1 flex flex-col gap-2 border-t border-slate-100 px-1 pb-1 pt-2">
-                  <a
-                    href={SIGN_IN_URL}
-                    className="whitespace-nowrap rounded-lg border border-slate-200 px-3 py-2 text-center text-sm font-medium text-slate-700 hover:bg-slate-50"
-                    onClick={() => setOpen(false)}
-                  >
-                    Sign in
-                  </a>
                   <a
                     href={DEMO_URL}
                     target="_blank"
